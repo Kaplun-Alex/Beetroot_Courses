@@ -1,0 +1,16 @@
+10, 20, red
+30, 40, blue
+50, 60, green
+20, 80, purple
+100, 200, red
+130, 140, blue
+150, 160, green
+120, 180, purple
+10, 20, red
+305, 40, blue
+105, 60, green
+205, 80, purple
+200, 200, red
+230, 240, blue
+250, 260, green
+220, 280, purple
