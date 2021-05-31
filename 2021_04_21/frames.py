@@ -7,7 +7,8 @@ win.title("FRAMES")
 win.geometry('500x500+10+10')
 
 frame1 = tkinter.Frame(win, padx = 50, pady=50,  background='black')
-frame1.pack(anchor='ne', side='left')     #must be n, ne, e, se, s, sw, w, nw, or center
+frame1.pack(anchor='ne', side='left')
+frame1.place(x=10, y=10)#must be n, ne, e, se, s, sw, w, nw, or center
 
 ok_button11 = Button(frame1, text='OK', font=BigFont, width=3)
 ok_button11.grid(row=0, column=0)

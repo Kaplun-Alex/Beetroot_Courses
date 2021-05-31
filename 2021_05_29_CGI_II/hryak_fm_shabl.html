@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+table {
+font-family: arial, sans-serif;
+border-collapse: collapse;
+width: 100%;
+}
+td, th {
+border: 1px solid #dddddd;
+text-align: left;
+padding: 8px;}
+tr:nth-child(even) {
+background-color: #dddddd;
+}
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+</head>
+<body>
+<h2>HRYAK FM PLAYLIST</h2>
+<table>
+<tr>
+<th>SONG</th>
+<th>PLAY</th>
+ <img src="giphy.gif" alt="">
+</tr>
+{%for i in list_of_files:%}
+ {{i}}
+ {%endfor%}
+</table>
+</body>
+</html>
+
+

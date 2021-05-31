@@ -1,0 +1,5 @@
+#EXTM3U
+% for i in list_of_files:
+#EXTINF:123, File1
+${i}
+%endfor

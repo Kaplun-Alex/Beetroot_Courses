@@ -1,0 +1,81 @@
+////////////////////////////////////////////////////////////////////////////
+1. Кого наняли в компанию последним по времени?
+select LastName, FirstName, max(HireDate) from employees
+
+Callahan	Laura	2004-03-04 00:00:00
+
+////////////////////////////////////////////////////////////////////////////
+2. Кто самый младший сотрудник в компании?
+select LastName, FirstName, max(BirthDate) from employees
+
+Peacock	Jane	1973-08-29 00:00:00
+
+////////////////////////////////////////////////////////////////////////////
+3. Выведите список клиентов и менеджеров, которые их обслуживают.
+select 
+	customers.FirstName, customers.LastName, customers.SupportRepId,  
+	employees.EmployeeId, employees.FirstName, employees.LastName 
+from 
+	customers 
+inner join 
+	employees 
+on 
+customers.SupportRepId  = employees.EmployeeId
+
+////////////////////////////////////////////////////////////////////////////
+4. Есть ли клиенты, которых никто не обслуживает?
+select * from customers where Company IS NULL # для примера
+select * from customers where SupportRepId IS NULL # по заданию
+
+
+////////////////////////////////////////////////////////////////////////////
+5. Есть ли менеджеры без клиентов?
+
+select * from employees where employeeid not in(select DISTINCT supportREPid from customers)
+
+
+////////////////////////////////////////////////////////////////////////////
+И ответить на следующие вопросы:
+* 1. У какого исполнителя больше всего альбомов?
+
+SELECT artistid, count(Albumid) FROM albums group by artistid order by count(Albumid) DESC;
+
+SELECT 
+    artistid, name, count(Albumid)
+FROM 
+    albums 
+inner join artists ON albums.ArtistId = artists.ArtistId group by albums.ArtistId order by count(Albumid) DESC limit 1;
+
+////////////////////////////////////////////////////////////////////////////
+* 2. TOP-10 исполнителей по количеству альбомов?
+
+SELECT 
+    artistid, name, count(Albumid)
+FROM 
+    albums 
+inner join artists ON albums.ArtistId = artists.ArtistId 
+group by albums.ArtistId order by count(Albumid) DESC LIMIT 10;
+
+
+
+////////////////////////////////////////////////////////////////////////////
+Уровень "невыполнимо":
+**3. Выяснить 10 самых крупных заказов и суммы, которые были заплачены.
+SELECT * from invoices order by total DESC limit 10
+
+*** 4. Выяснить имена клиентов и суммы их заказов. 
+Вывести 10 самых крупных заказов и имя-фамилию тех, кто их сделал.
+
+SELECT 
+    customerid, 
+    FirstName, 
+    LastName, 
+    SUM(total) 
+FROM 
+    invoices 
+INNER JOIN customers ON invoices.customerid = customers.CustomerId 
+group by 
+    invoices.CustomerId 
+order by 
+    sum(total) 
+DESC limit 10;

@@ -1,0 +1,325 @@
+sqlite> .open chinook.db
+sqlite> .help
+.archive ...             Manage SQL archives
+.auth ON|OFF             Show authorizer callbacks
+.backup ?DB? FILE        Backup DB (default "main") to FILE
+.bail on|off             Stop after hitting an error.  Default OFF
+.binary on|off           Turn binary output on or off.  Default OFF
+.cd DIRECTORY            Change the working directory to DIRECTORY
+.changes on|off          Show number of rows changed by SQL
+.check GLOB              Fail if output since .testcase does not match
+.clone NEWDB             Clone data into NEWDB from the existing database
+.databases               List names and files of attached databases
+.dbconfig ?op? ?val?     List or change sqlite3_db_config() options
+.dbinfo ?DB?             Show status information about the database
+.dump ?OBJECTS?          Render database content as SQL
+.echo on|off             Turn command echo on or off
+.eqp on|off|full|...     Enable or disable automatic EXPLAIN QUERY PLAN
+.excel                   Display the output of next command in spreadsheet
+.exit ?CODE?             Exit this program with return-code CODE
+.expert                  EXPERIMENTAL. Suggest indexes for queries
+.explain ?on|off|auto?   Change the EXPLAIN formatting mode.  Default: auto
+.filectrl CMD ...        Run various sqlite3_file_control() operations
+.fullschema ?--indent?   Show schema and the content of sqlite_stat tables
+.headers on|off          Turn display of headers on or off
+.help ?-all? ?PATTERN?   Show help text for PATTERN
+.import FILE TABLE       Import data from FILE into TABLE
+.imposter INDEX TABLE    Create imposter table TABLE on index INDEX
+.indexes ?TABLE?         Show names of indexes
+.limit ?LIMIT? ?VAL?     Display or change the value of an SQLITE_LIMIT
+.lint OPTIONS            Report potential schema issues.
+.load FILE ?ENTRY?       Load an extension library
+.log FILE|off            Turn logging on or off.  FILE can be stderr/stdout
+.mode MODE ?TABLE?       Set output mode
+.nullvalue STRING        Use STRING in place of NULL values
+.once ?OPTIONS? ?FILE?   Output for the next SQL command only to FILE
+.open ?OPTIONS? ?FILE?   Close existing database and reopen FILE
+.output ?FILE?           Send output to FILE or stdout if FILE is omitted
+.parameter CMD ...       Manage SQL parameter bindings
+.print STRING...         Print literal STRING
+.progress N              Invoke progress handler after every N opcodes
+.prompt MAIN CONTINUE    Replace the standard prompts
+.quit                    Exit this program
+.read FILE               Read input from FILE
+.recover                 Recover as much data as possible from corrupt db.
+.restore ?DB? FILE       Restore content of DB (default "main") from FILE
+.save FILE               Write in-memory database into FILE
+.scanstats on|off        Turn sqlite3_stmt_scanstatus() metrics on or off
+.schema ?PATTERN?        Show the CREATE statements matching PATTERN
+.selftest ?OPTIONS?      Run tests defined in the SELFTEST table
+.separator COL ?ROW?     Change the column and row separators
+.session ?NAME? CMD ...  Create or control sessions
+.sha3sum ...             Compute a SHA3 hash of database content
+.shell CMD ARGS...       Run CMD ARGS... in a system shell
+.show                    Show the current values for various settings
+.stats ?ARG?             Show stats or turn stats on or off
+.system CMD ARGS...      Run CMD ARGS... in a system shell
+.tables ?TABLE?          List names of tables matching LIKE pattern TABLE
+.testcase NAME           Begin redirecting output to 'testcase-out.txt'
+.testctrl CMD ...        Run various sqlite3_test_control() operations
+.timeout MS              Try opening locked tables for MS milliseconds
+.timer on|off            Turn SQL timer on or off
+.trace ?OPTIONS?         Output each SQL statement as it is run
+.vfsinfo ?AUX?           Information about the top-level VFS
+.vfslist                 List all available VFSes
+.vfsname ?AUX?           Print the name of the VFS stack
+.width NUM1 NUM2 ...     Set minimum column widths for columnar output
+sqlite> .databases
+
+//////////////////////////////////////////////////////////////////////////
+2.1	Распечатайте список подключенных баз данных.
+sqlite> .databases
+main: E:\Python_Projects\Beetroot_Courses_Homework\2021_05_17_SQL\chinook.db r/w
+
+//////////////////////////////////////////////////////////////////////////
+2.2	Распечатайте все записи из таблицы customers.
+sqlite> select * from customers;
+
+//////////////////////////////////////////////////////////////////////////
+2.4	Покажите пять первых записей в таблице customers, 
+выводя только три поля (колонки) - имя, 
+фамилия и страна проживания клиента.
+.headers on
+.mode columns
+select firstname, lastname, country from customers limit 5;
+FirstName  LastName     Country
+---------  -----------  --------------
+Luis       Goncalves    Brazil
+Leonie     Kohler       Germany
+Francois   Tremblay     Canada
+Bjorn      Hansen       Norway
+Frantisek  Wichterlova  Czech Republic
+
+//////////////////////////////////////////////////////////////////////////
+2.5	Посмотрите .help по команде .mode
+.help
+
+//////////////////////////////////////////////////////////////////////////
+2.6	Настройте вывод в режим колонок (column) с помощью команды .mode
+.headers on
+.mode columns
+
+//////////////////////////////////////////////////////////////////////////
+2.7	Покажите пятнадцать первых записей в таблице customers,
+выводя только три поля (колонки) - имя, фамилия и страна проживания клиента.
+FirstName  LastName     Country
+---------  -----------  --------------
+Luis       Goncalves    Brazil
+Leonie     Kohler       Germany
+Francois   Tremblay     Canada
+Bjorn      Hansen       Norway
+Frantisek  Wichterlova  Czech Republic
+Helena     Holy         Czech Republic
+Astrid     Gruber       Austria
+Daan       Peeters      Belgium
+Kara       Nielsen      Denmark
+Eduardo    Martins      Brazil
+Alexandre  Rocha        Brazil
+Roberto    Almeida      Brazil
+Fernanda   Ramos        Brazil
+Mark       Philips      Canada
+Jennifer   Peterson     Canada
+
+//////////////////////////////////////////////////////////////////////////
+2.8	Настройте вывод в режим box
+.mode box
+
+//////////////////////////////////////////////////////////////////////////
+2.9	Покажите пятнадцать первых записей в таблице customers,
+выводя только три поля (колонки) - фамилия, имя и страна проживания клиента.
+sqlite> select firstname, lastname, country from customers limit 15;
+┌───────────┬─────────────┬────────────────┐
+│ FirstName │  LastName   │    Country     │
+├───────────┼─────────────┼────────────────┤
+│ Luis      │ Goncalves   │ Brazil         │
+│ Leonie    │ Kohler      │ Germany        │
+│ Francois  │ Tremblay    │ Canada         │
+│ Bjorn     │ Hansen      │ Norway         │
+│ Frantisek │ Wichterlova │ Czech Republic │
+│ Helena    │ Holy        │ Czech Republic │
+│ Astrid    │ Gruber      │ Austria        │
+│ Daan      │ Peeters     │ Belgium        │
+│ Kara      │ Nielsen     │ Denmark        │
+│ Eduardo   │ Martins     │ Brazil         │
+│ Alexandre │ Rocha       │ Brazil         │
+│ Roberto   │ Almeida     │ Brazil         │
+│ Fernanda  │ Ramos       │ Brazil         │
+│ Mark      │ Philips     │ Canada         │
+│ Jennifer  │ Peterson    │ Canada         │
+└───────────┴─────────────┴────────────────┘
+
+//////////////////////////////////////////////////////////////////////////
+2.10	Настройте вывод в режим list с помощью команды .mode
+.mode list
+//////////////////////////////////////////////////////////////////////////
+2.11	Покажите пятнадцать первых записей в таблице customers,
+ выводя только три поля (колонки) - страна проживания клиента, фамилия, имя.
+sqlite> select firstname, lastname, country from customers limit 5;
+
+FirstName|LastName|Country
+Luis|Goncalves|Brazil
+Leonie|Kohler|Germany
+Francois|Tremblay|Canada
+Bjorn|Hansen|Norway
+Frantisek|Wichterlova|Czech Republic
+
+//////////////////////////////////////////////////////////////////////////
+2.12	Настройте вывод в режим csv с помощью команды .mode
+.mode csv
+
+//////////////////////////////////////////////////////////////////////////
+2.13	Покажите пятнадцать первых записей в таблице customers, 
+выводя только три поля (колонки) - имя, фамилия и страна проживания клиента.
+
+sqlite> select firstname, lastname, country from customers limit 5;
+FirstName,LastName,Country
+"Luis","Goncalves",Brazil
+Leonie,"Kohler",Germany
+"Francois",Tremblay,Canada
+"Bjorn",Hansen,Norway
+"Frantisek","Wichterlova","Czech Republic"
+
+//////////////////////////////////////////////////////////////////////////
+2.14	Настройте вывод в режим json с помощью команды .mode
+.mode json
+
+//////////////////////////////////////////////////////////////////////////
+2.15	Покажите тринадцать первых записей в таблице customers, 
+выводя только четыре поля - id, имя, фамилия и страна проживания клиента.
+sqlite> select custometid, firstname, lastname, country from customers limit 13;
+
+[{"CustomerId":1,"FirstName":"Lu├нs","LastName":"Gon├зalves","Country":"Brazil"},
+{"CustomerId":2,"FirstName":"Leonie","LastName":"K├╢hler","Country":"Germany"},
+{"CustomerId":3,"FirstName":"Fran├зois","LastName":"Tremblay","Country":"Canada"},
+{"CustomerId":4,"FirstName":"Bj├╕rn","LastName":"Hansen","Country":"Norway"},
+{"CustomerId":5,"FirstName":"Franti┼бek","LastName":"Wichterlov├б","Country":"Czech Republic"},
+{"CustomerId":6,"FirstName":"Helena","LastName":"Hol├╜","Country":"Czech Republic"},
+{"CustomerId":7,"FirstName":"Astrid","LastName":"Gruber","Country":"Austria"},
+{"CustomerId":8,"FirstName":"Daan","LastName":"Peeters","Country":"Belgium"},
+{"CustomerId":9,"FirstName":"Kara","LastName":"Nielsen","Country":"Denmark"},
+{"CustomerId":10,"FirstName":"Eduardo","LastName":"Martins","Country":"Brazil"},
+{"CustomerId":11,"FirstName":"Alexandre","LastName":"Rocha","Country":"Brazil"},
+{"CustomerId":12,"FirstName":"Roberto","LastName":"Almeida","Country":"Brazil"},
+{"CustomerId":13,"FirstName":"Fernanda","LastName":"Ramos","Country":"Brazil"}]
+
+//////////////////////////////////////////////////////////////////////////
+2.16	Настройте вывод в режим markdown с помощью команды .mode
+.mode  markdown
+
+//////////////////////////////////////////////////////////////////////////
+2.17	Покажите двадцать первых записей в таблице customers, 
+выводя только четыре поля - id, имя, фамилия и страна проживания клиента.
+sqlite> select customerid, firstname, lastname, country from customers limit 13;
+| CustomerId | FirstName |  LastName   |    Country     |
+|------------|-----------|-------------|----------------|
+| 1          | Luis      | Goncalves   | Brazil         |
+| 2          | Leonie    | Kohler      | Germany        |
+| 3          | Francois  | Tremblay    | Canada         |
+| 4          | Bjorn     | Hansen      | Norway         |
+| 5          | Frantisek | Wichterlova | Czech Republic |
+| 6          | Helena    | Holy        | Czech Republic |
+| 7          | Astrid    | Gruber      | Austria        |
+| 8          | Daan      | Peeters     | Belgium        |
+| 9          | Kara      | Nielsen     | Denmark        |
+| 10         | Eduardo   | Martins     | Brazil         |
+| 11         | Alexandre | Rocha       | Brazil         |
+| 12         | Roberto   | Almeida     | Brazil         |
+| 13         | Fernanda  | Ramos       | Brazil         |
+
+//////////////////////////////////////////////////////////////////////////
+2.18	Настройте вывод в режим table с помощью команды .mode
+.mode table
+
+//////////////////////////////////////////////////////////////////////////
+2.19	Покажите тридцать первых записей в таблице customers, 
+выводя только четыре поля - id, имя, фамилия и страна проживания клиента
+sqlite> select customerid, firstname, lastname, country from customers limit 30;
+
+//////////////////////////////////////////////////////////////////////////
+2.20	Настройте вывод в режим box
+.mode box
+
+//////////////////////////////////////////////////////////////////////////
+2.21	Покажите тридцать первых записей в таблице customers, 
+выводя только четыре поля - id, имя, фамилия и страна проживания клиента,
+сортируя их по имени клиента.
+sqlite> select customerid, firstname, lastname, country from customers order by firstname limit 10;
+┌────────────┬───────────┬───────────┬───────────┐
+│ CustomerId │ FirstName │ LastName  │  Country  │
+├────────────┼───────────┼───────────┼───────────┤
+│ 32         │ Aaron     │ Mitchell  │ Canada    │
+│ 11         │ Alexandre │ Rocha     │ Brazil    │
+│ 7          │ Astrid    │ Gruber    │ Austria   │
+│ 4          │ Bjorn     │ Hansen    │ Norway    │
+│ 39         │ Camille   │ Bernard   │ France    │
+│ 8          │ Daan      │ Peeters   │ Belgium   │
+│ 20         │ Dan       │ Miller    │ USA       │
+│ 56         │ Diego     │ Gutierrez │ Argentina │
+│ 40         │ Dominique │ Lefebvre  │ France    │
+│ 10         │ Eduardo   │ Martins   │ Brazil    │
+└────────────┴───────────┴───────────┴───────────┘
+//////////////////////////////////////////////////////////////////////////
+2.22	Покажите двадцать первых записей в таблице customers,
+выводя только четыре поля - id, имя, фамилия и страна проживания клиента, 
+сортируя их по стране проживания клиента.
+
+sqlite> select customerid, firstname, lastname, country from customers order by country limit 10;
+┌────────────┬───────────┬───────────┬───────────┐
+│ CustomerId │ FirstName │ LastName  │  Country  │
+├────────────┼───────────┼───────────┼───────────┤
+│ 56         │ Diego     │ Gutierrez │ Argentina │
+│ 55         │ Mark      │ Taylor    │ Australia │
+│ 7          │ Astrid    │ Gruber    │ Austria   │
+│ 8          │ Daan      │ Peeters   │ Belgium   │
+│ 1          │ Luis      │ Goncalves │ Brazil    │
+│ 10         │ Eduardo   │ Martins   │ Brazil    │
+│ 11         │ Alexandre │ Rocha     │ Brazil    │
+│ 12         │ Roberto   │ Almeida   │ Brazil    │
+│ 13         │ Fernanda  │ Ramos     │ Brazil    │
+│ 3          │ Francois  │ Tremblay  │ Canada    │
+
+///////////////////////////////////////////////////////////////////////////
+2.23	Сделайте выборку из таблицы customers, которая выводит
+ последовательно всех клиентов, отсортированных по имени, которые живут в Индии
+
+sqlite> select customerid, firstname, lastname, country from customers where Country = 'India' order by firstname;
+┌────────────┬───────────┬────────────┬─────────┐
+│ CustomerId │ FirstName │  LastName  │ Country │
+├────────────┼───────────┼────────────┼─────────┤
+│ 58         │ Manoj     │ Pareek     │ India   │
+│ 59         │ Puja      │ Srivastava │ India   │
+└────────────┴───────────┴────────────┴─────────┘
+
+
+///////////////////////////////////////////////////////////////////////////
+2.24	Сделайте выборку из таблицы customers, которая выводит 
+последовательно всех клиентов, отсортированных по фамилии, которые живут в Бразилии
+
+select customerid, firstname, lastname, country from customers where Country = 'Brazil' order by lastname limit 10;
+┌────────────┬───────────┬───────────┬─────────┐
+│ CustomerId │ FirstName │ LastName  │ Country │
+├────────────┼───────────┼───────────┼─────────┤
+│ 12         │ Roberto   │ Almeida   │ Brazil  │
+│ 1          │ Luis      │ Goncalves │ Brazil  │
+│ 10         │ Eduardo   │ Martins   │ Brazil  │
+│ 13         │ Fernanda  │ Ramos     │ Brazil  │
+│ 11         │ Alexandre │ Rocha     │ Brazil  │
+└────────────┴───────────┴───────────┴─────────┘
+
+///////////////////////////////////////////////////////////////////////////
+2.25	Сделайте выборку из таблицы customers, которая выводит 
+последовательно всех клиентов, отсортированных по CustomerId, 
+которые живут в Бразилии или Индии
+
+sqlite> select customerid, firstname, lastname, country from customers where Country IN ('Brazil', 'India') order by customerid;
+┌────────────┬───────────┬────────────┬─────────┐
+│ CustomerId │ FirstName │  LastName  │ Country │
+├────────────┼───────────┼────────────┼─────────┤
+│ 1          │ Luis      │ Goncalves  │ Brazil  │
+│ 10         │ Eduardo   │ Martins    │ Brazil  │
+│ 11         │ Alexandre │ Rocha      │ Brazil  │
+│ 12         │ Roberto   │ Almeida    │ Brazil  │
+│ 13         │ Fernanda  │ Ramos      │ Brazil  │
+│ 58         │ Manoj     │ Pareek     │ India   │
+│ 59         │ Puja      │ Srivastava │ India   │
+└────────────┴───────────┴────────────┴─────────┘
